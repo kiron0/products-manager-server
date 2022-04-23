@@ -40,13 +40,6 @@ async function run() {
       res.json(result);
     });
 
-    // app.post("/products", async (req, res) => {
-    //   const newProduct = req.body;
-    //   console.log("adding new product", newProduct);
-    //   const result = await productsCollection.insertOne(newProduct);
-    //   res.send(result);
-    // });
-
     app.post("/products", async (req, res) => {
       const brand = req.body.brand;
       const name = req.body.name;
@@ -73,9 +66,10 @@ async function run() {
       const options = { upsert: true };
       const updatedDoc = {
         $set: {
+          brand: updatedProduct.brand,
           name: updatedProduct.name,
           price: updatedProduct.price,
-          rating: updatedProduct.rating,
+          image: updatedProduct.image,
         },
       };
       const result = await productsCollection.updateOne(
@@ -101,7 +95,17 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Running my node Products Manager Server");
+  res.send({
+    products: {
+      allProducts: "https://products-manager0.herokuapp.com/products",
+      specificProduct: {
+        pattern: "https://products-manager0.herokuapp.com/product/{_id}",
+        example: "https://products-manager0.herokuapp.com/product/6263a3f86375db50d03bd09a",
+      },
+    },
+    maintaner: "Toufiq Hasan Kiron <kiron@mygsuite.co>",
+    source: "https://github.com/kiron0/products-manager-server",
+  });
 });
 
 app.listen(port, () => {
