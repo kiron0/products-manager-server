@@ -47,23 +47,23 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.post('/products', async (req, res) => {
+    app.post("/products", async (req, res) => {
+      const brand = req.body.brand;
       const name = req.body.name;
       const price = req.body.price;
-      const rating = req.body.rating;
       const pic = req.files.image;
       const picData = pic.data;
-      const encodedPic = picData.toString('base64');
-      const imageBuffer = Buffer.from(encodedPic, 'base64');
+      const encodedPic = picData.toString("base64");
+      const imageBuffer = Buffer.from(encodedPic, "base64");
       const product = {
-          name,
-          price,
-          rating,
-          image: imageBuffer
-      }
+        brand,
+        name,
+        price,
+        image: imageBuffer,
+      };
       const result = await productsCollection.insertOne(product);
       res.json(result);
-  })
+    });
 
     // update user
     app.put("/product/:id", async (req, res) => {
