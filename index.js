@@ -103,7 +103,7 @@ app.get("/", (req, res) => {
         example: "https://products-manager0.herokuapp.com/product/6263a3f86375db50d03bd09a",
       },
     },
-    maintaner: "Toufiq Hasan Kiron <kiron@mygsuite.co>",
+    maintainer: "Toufiq Hasan Kiron <kiron@mygsuite.co>",
     source: "https://github.com/kiron0/products-manager-server",
   });
 });
